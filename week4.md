@@ -192,3 +192,35 @@ val compare : (’a -> ’a -> int) -> ’a t -> ’a t -> int
 val equal : (’a -> ’a -> bool) -> ’a t -> ’a t -> bool
 end
 ```
+
+How do we use Map? You can't change Maps, but you can take the old Map, make a copy of it, and add stuff to it and make a new Map. Add things to Maps, check for membership, find values via keys.
+
+```ocaml
+# let mymap = StringMap.empty;; (* Create empty map *)
+val mymap : ’a StringMap.t = <abstr>
+# let mymap = StringMap.add "Douglas" 42 mymap;; (* Create new Map, coincidentally called mymap. Add pair *)
+val mymap : int StringMap.t = <abstr>
+# StringMap.mem "foo" mymap;; (* Is "foo" there? *)
+- : bool = false
+# StringMap.mem "Douglas" mymap;; (* Is "Douglas" there? *)
+- : bool = true
+# StringMap.find "Douglas" mymap;; (* Get value *)
+- : int = 42
+# let mymap = StringMap.add "Adams" 17 mymap;; (* Again, create a new Map. *)
+val mymap : int StringMap.t = <abstr>
+# StringMap.find "Adams" mymap;;
+- : int = 17
+# StringMap.find "Douglas" mymap;;
+- : int = 42
+# StringMap.find "Slarti" mymap;;
+Exception: Not_found.
+```
+
+Maps are fully functional. Maps need a totally ordered key type. If you really want to make your own Map, you could pass in a struct:
+
+```ocaml
+module StringMap = Map.Make(struct
+type t = string
+let compare x y = Pervasives.compare x y
+end)
+```
