@@ -6,13 +6,13 @@ Pattern Matching with `when` and `as`
 
 The when keyword lets you add a guard expression:
 
-```
+```ocaml
 let tall = function
 	| (h, s) when h > 180 -> s ^ " is tall"
 	| (_, s) -> s ^ " is short";;
 ```
 
-```
+```ocaml
 match ((3,9), 4) with
 	(_ as xx, 4) -> xx
 ```
@@ -26,7 +26,7 @@ Algebraic Data types
 #####Records
 If you have two or three fields, you can use tuples, but if you can't remember, you can declare types this way:
 
-```
+```ocaml
 # type base = { x : int; y : int; name : string };;
 type base = { x : int; y : int; name : string; }
 # let b0 = { x = 0; y = 0; name = "home" };;
@@ -47,13 +47,13 @@ You can define enumerated types; objects that can be one of a set of types.
 
 Boolean is also an enumerated type:
 
-```
+```ocaml
 type bool = True | False
 ```
 
 `Winter` on its own is a type constructor.
 
-```
+```ocaml
 # type seasons = Winter | Spring | Summer | Fall;;
 type seasons = Winter | Spring | Summer | Fall
 # let weather = function
@@ -71,7 +71,7 @@ List.map weather year;;
 
 Syntax trees:
 
-```
+```ocaml
 # type expr =
 Lit of int
 | Plus of expr * expr
@@ -93,5 +93,7 @@ val eval : expr -> int = <fun>
 # eval (Plus(Lit(17), Lit(25)));;
 - : int = 42
 # eval (Plus(Times(Lit(3), Lit(2)), Lit(1)));;
-- : int = 7```
-Use pattern matching to create a function `eval`.
+- : int = 7
+```
+Use pattern matching to create a function `eval`.
+
