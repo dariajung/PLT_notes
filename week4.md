@@ -306,3 +306,5 @@ module F = Foo;;
 ```
 
 Use `open` to get every name from a module.
+
+If you want to separate interface, then you put everything into a `.mli` file. Don't worry about this for this class, but it's there if you want it.
