@@ -97,3 +97,19 @@ val eval : expr -> int = <fun>
 ```
 Use pattern matching to create a function `eval`.
 
+How do we change `eval` if we want to return integer or float? When in doubt, create another type (call it `result`) that can be either an integer or a float. `eval` can then spit out a `result` data type.
+
+```ocaml
+type result = 	MyInt of int
+		| MyFloat of float
+```
+
+```ocaml
+let rec eval = function 
+	Lit(x) -> MyInt x
+	.
+	.
+	.
+val eval : expr -> result = <fun>
+```
+```
