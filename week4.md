@@ -232,3 +232,20 @@ Every once in a while, you might want to print something. It becomes very useful
 Print debugging is great. :thumbsup:
 
 `print_endline` and `print_string` (both of these take strings, print the strings, and then return the Unit). 
+
+OCaml has Arrays, which are mutable. You can modify an Array in place. 
+
+```ocaml
+# let a = [| 42; 17; 19 |];; (* Array literal *)
+val a : int array = [|42; 17; 19|]
+# let aa = Array.make 5 0;; (* Fill a new array *)
+val aa : int array = [|0; 0; 0; 0; 0|]
+# a.(0);; (* Random access *)
+```
+
+```ocaml
+# a.(2) <- 20;; (* Arrays are mutable! Stuff 20 "violently" into where 2 was. *)
+- : unit = ()
+# a;;
+- : int array = [|42; 17; 20|]
+```
