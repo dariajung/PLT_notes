@@ -224,3 +224,11 @@ type t = string
 let compare x y = Pervasives.compare x y
 end)
 ```
+
+When a Map is empty, it is willing to take any type of KV pair. But once you put in a value, then the Map expects certain types for Keys and Values.
+
+You can do imperative programming in OCaml, but that's not really the point of using OCaml in this class. 
+Every once in a while, you might want to print something. It becomes very useful to have functions that have side effects. 
+Print debugging is great. :thumbsup:
+
+`print_endline` and `print_string` (both of these take strings, print the strings, and then return the Unit). 
