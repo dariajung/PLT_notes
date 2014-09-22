@@ -142,3 +142,53 @@ val sum : int option list -> int = <fun>
 # sum [None; Some(5); None; Some(37)];;
 - : int = 42
 ```
+
+Taking a list of `option int` values, and performing sum on it.
+
+See slide 50 of Professor Edwards' OCaml notes to see pros and cons of Algebraic Types vs. Classes and Enums.
+
+An algebraic type is best when the set of types rarely change but you often want to add additional functions. Classes are good in exactly the opposite case.
+
+#####Exceptions
+```ocaml
+# 5 / 0;;
+Exception: Division_by_zero.
+# try
+5 / 0
+with Division_by_zero -> 42;;
+- : int = 42
+# exception My_exception;;
+exception My_exception
+# try
+if true then
+raise My_exception
+else 0
+with My_exception -> 42;;
+- : int = 42
+```
+
+You can declare your own exceptions. You can raise them, and you can attach data types to them as well. Exceptions are kind of like algebraic data types. It's nice occasionally if you want a built in function to raise an exception. 
+
+#####Maps
+In the OCaml standard library. It's not quite as fast asymptotically as a hash table (logn access time as opposed to constant time). Map.Make isn't really a function (a functor). This is a way to generate a new type (super meta???), no it actually returns an entire MODULE. 
+
+```ocaml
+# module StringMap = Map.Make(String);;
+module StringMap :
+sig
+type key = String.t
+type ’a t = ’a Map.Make(String).t
+val empty : ’a t
+val is_empty : ’a t -> bool
+val add : key -> ’a -> ’a t -> ’a t
+val find : key -> ’a t -> ’a
+val remove : key -> ’a t -> ’a t
+val mem : key -> ’a t -> bool
+val iter : (key -> ’a -> unit) -> ’a t -> unit
+val map : (’a -> ’b) -> ’a t -> ’b t
+val mapi : (key -> ’a -> ’b) -> ’a t -> ’b t
+val fold : (key -> ’a -> ’b -> ’b) -> ’a t -> ’b -> ’b
+val compare : (’a -> ’a -> int) -> ’a t -> ’a t -> int
+val equal : (’a -> ’a -> bool) -> ’a t -> ’a t -> bool
+end
+```
