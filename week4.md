@@ -249,3 +249,60 @@ val aa : int array = [|0; 0; 0; 0; 0|]
 # a;;
 - : int array = [|42; 17; 20|]
 ```
+
+You can convert between list and Array:
+
+```ocaml
+# let l = [24; 32; 17];;
+val l : int list = [24; 32; 17]
+# let b = Array.of_list l;; (* Array from a list *)
+val b : int array = [|24; 32; 17|]
+# let c = Array.append a b;; (* Concatenation *)
+val c : int array = [|42; 17; 20; 24; 32; 17|]
+```
+
+There is a way to forcibly glue stuff to an Array and change its dimensions. 
+
+See slide 61 for Arrays vs. Lists for tradeoffs.
+
+There are Hash Tables. They are also mutable objects like Arrays (Professor Edwards calls them "evil"). 
+
+```ocaml
+# module StringHash = Hashtbl.Make(struct
+type t = string (* type of keys *)
+let equal x y = x = y (* use structural comparison *)
+let hash = Hashtbl.hash (* generic hash function *)
+end);;
+module StringHash :
+sig
+type key = string
+type ’a t
+val create : int -> ’a t
+val clear : ’a t -> unit
+val copy : ’a t -> ’a t
+val add : ’a t -> key -> ’a -> unit
+val remove : ’a t -> key -> unit
+val find : ’a t -> key -> ’a
+val find_all : ’a t -> key -> ’a list
+val replace : ’a t -> key -> ’a -> unit
+val mem : ’a t -> key -> bool
+val iter : (key -> ’a -> unit) -> ’a t -> unit
+val fold : (key -> ’a -> ’b -> ’b) -> ’a t -> ’b -> ’b
+val length : ’a t -> int
+end
+```
+
+Seed Hash Tables with a reasonable amount of memory. Use HashTables instead of Map if you want mutability or you want something faster. 
+
+Quick discussion of Modules in OCaml:
+
+When you write something using the `<name>.ml` extension, then it automatically turns everything in that file into part of <name> module. So `foo.ml` makes everything within part of the `Foo` module.
+
+If name of the module is long or complicated, you can import qualified:
+Import `Foo` as `F`.
+
+```ocaml
+module F = Foo;;
+```
+
+Use `open` to get every name from a module.
