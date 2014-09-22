@@ -112,4 +112,33 @@ let rec eval = function
 	.
 val eval : expr -> result = <fun>
 ```
+
+All type constructors/tag name must be upper-case:
+
+```ocaml
+# let bad1 = left | right;;
+Syntax error
+```
+
+Tag names must be globally unique.
+
+Compiler warns about missing cases; if you add new type constructor to `Lit`, then functions that don't cover that new case will return an error.
+
+#####The Option Type: A Safe Null Pointer
+`None` is like a null pointer; `Some` is a non-null pointer.
+
+```
+`a is a polymorphic type.
+```
+
+An example of `Option` in action:
+
+```ocaml
+# let rec sum = function
+[] -> 0 (* base case *)
+| None::tl -> sum tl (* handle the "null pointer" case *)
+| Some(x)::tl -> x + sum tl;; (* normal case *)
+val sum : int option list -> int = <fun>
+# sum [None; Some(5); None; Some(37)];;
+- : int = 42
 ```
