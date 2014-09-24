@@ -380,4 +380,17 @@ When you run across a literal, it is what you want. A Binary operator is in the 
 
 This is a desktop calculator program. 
 
+Compile using OCaml Yak, which we will talk about later. 
+
+For project:
+- Scanner
+- AST
+- Parser
+- Interpreter 
+
+You need your compiler to compile into something, not just the AST (compile to C, bytecode, C++, whatever). 
+
+How can we overload things like `+`? One way is to make everything in the language a matrix. 
+
+For parser, get the grammar right, pass it through OCaml yak to get a parser. 
 
