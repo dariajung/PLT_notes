@@ -472,3 +472,16 @@ First step of a compiler: Lexical analysis to get sequence of tokens.
 `int` `gcd` `(` `int` `a` `,` `int` `b` `)` `{` `while` `(` `a`
 `!=` `b` `)` `{` `if` `(` `a` `>` `b` `)` `a` `-=` `b` `;` `else`
 `b` `-=` `a` `;` `}` `return` `a` `;` `}`
+
+We get a stream of tokens, but there still isn't structure here. 
+The next step is parsing. 
+
+Parsing gives an Abstract Syntax Tree. Commas and semicolons have gone into dictating the structure of the tree. 
+
+How do we execute the AST? Come up with some eval for the AST. Much easier to evaluate than the sequence of characters.
+
+The next step is semantic analysis. Figures out what variables are defined within what function, which ones refer to what. Is something a function? What is the type? Is this tree a valid program? 
+
+Once you've analyzed the tree for semantics, it is then translated into 3-Address Code. 3-Address code looks a bit like assembly, this is not an accident, but it's super close to assembly and close to being executable. Three addresses: one for the destination, and two for the inputs to it. 
+
+Optimize the three-address code to generate assembly. 
