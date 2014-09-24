@@ -307,4 +307,77 @@ module F = Foo;;
 
 Use `open` to get every name from a module.
 
-If you want to separate interface, then you put everything into a `.mli` file. Don't worry about this for this class, but it's there if you want it.
+If you want to separate interface, then you put everything into a `.mli` file (where you can define type signatures for functions). Don't worry about this for this class, but it's there if you want it.
+
+#####September 24, 2014
+
+#####A Complete Interpreter
+The scanner and AST. 
+
+```ocaml
+{ open Parser }
+rule token =
+parse [’ ’ ’\t’ ’\r’ ’\n’] { token lexbuf }
+| ’+’ { PLUS }
+| ’-’ { MINUS }
+| ’*’ { TIMES }
+| ’/’ { DIVIDE }
+| [’0’-’9’]+ as lit { LITERAL(int_of_string lit) }
+| eof { EOF }
+```
+
+Abstract Syntax Tree that represents arithmetic expressions.
+```ocaml
+type operator = Add | Sub | Mul | Div
+type expr =
+Binop of expr * operator * expr
+| Lit of int
+```
+The scanner takes the input characters that you give it, and it gets structured into a tree through a parser. 
+
+```ocaml
+%{ open Ast %}
+%token PLUS MINUS TIMES DIVIDE EOF
+%token <int> LITERAL
+%left PLUS MINUS
+%left TIMES DIVIDE
+%start expr
+%type <Ast.expr> expr
+%%
+expr:
+expr PLUS expr { Binop($1, Add, $3) }
+| expr MINUS expr { Binop($1, Sub, $3) }
+| expr TIMES expr { Binop($1, Mul, $3) }
+| expr DIVIDE expr { Binop($1, Div, $3) }
+| LITERAL { Lit($1) }
+```
+
+We will talk about OCaml Yak later. 
+
+The parser takes the tokens from the scanner and builds the tree. `Binop` is a constructor. 
+
+Once the input has been run through the scanner and parser, and an AST has been built, you need to take that AST and interpret it. If I have a 3, it's 3. If I have sum of 3 and 4, we should add them together. 
+
+```ocaml
+open Ast
+let rec eval = function
+Lit(x) -> x
+| Binop(e1, op, e2) ->
+let v1 = eval e1 and v2 = eval e2 in
+match op with
+Add -> v1 + v2
+| Sub -> v1 - v2
+| Mul -> v1 * v2
+| Div -> v1 / v2
+let _ =
+let lexbuf = Lexing.from_channel stdin in
+let expr = Parser.expr Scanner.token lexbuf in
+let result = eval expr in
+print_endline (string_of_int result) (* nice to see what we have, so print it out *)
+```
+
+When you run across a literal, it is what you want. A Binary operator is in the form `Binop(e1, op, e2)`. Need to evaluate `e1` and `e2` and then look at the operation, `op`.
+
+This is a desktop calculator program. 
+
+
