@@ -485,3 +485,5 @@ The next step is semantic analysis. Figures out what variables are defined withi
 Once you've analyzed the tree for semantics, it is then translated into 3-Address Code. 3-Address code looks a bit like assembly, this is not an accident, but it's super close to assembly and close to being executable. Three addresses: one for the destination, and two for the inputs to it. 
 
 Optimize the three-address code to generate assembly. 
+
+Every compiler behaves something like this. 
