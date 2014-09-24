@@ -421,4 +421,24 @@ Three Knee Jerk Reactions
 
 Compiler is a middle man between source program and what gets executed in processor. 
 Compiler looks at the program, and generates an equivalent program. 
-Why use a compiler? Compiled code generally runs faster than interpreted code. Compilers optimize. Compilers catch mistakes, but interpreted programs run until it hits that mistake, it has to evaluate everything that leads to it. 
+
+Why use a compiler? Compiled code generally runs faster than interpreted code. Compilers optimize. Compilers catch mistakes, but interpreted programs run until it hits that mistake, it has to evaluate everything that leads to it. Lots of overhead goes away when using a compiler.
+
+What are the advantages of an interpreter? 
+- You don't have to wait for programs to compile
+- Some interpreters are interactive / conducting tiny little experiments
+- Supportability
+
+Virtual Machines!
+
+Source Program -> Compiler -> Bytecode -> Virtual Machine 
+
+Java and Erlang have Virtual Machines. Virtual Machine is kind of like an interpreter that works on bytecode. Make the virtual machine portable. What's the drawback of VM? The VM is still an interpreter, so there might be a semantic mismatch between the bytecode and VM. But this runs slowly. 
+
+Add another level of indirection:
+Source Program -> Compiler -> Bytecode -> Just in time Compiler -> Machine Code
+
+Just in time (JIT) compilation: compilation is done during run time :o 
+There is always a trade off in JIT, time compiling down to bytecode makes a bit of a delay at the beginning. If you REALLY tune a JIT compiler, you might be able to get it as fast as a regular compiler. 
+
+Bytecode is a series of instructions. To actually run those instructions, the easiest thing to do is be an interpreter. But there is still interpretation overhead. The idea of JIT, is that it grabs segments of the bytecode, and translates it into assembly instructions directly. 
