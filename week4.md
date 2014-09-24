@@ -442,3 +442,33 @@ Just in time (JIT) compilation: compilation is done during run time :o
 There is always a trade off in JIT, time compiling down to bytecode makes a bit of a delay at the beginning. If you REALLY tune a JIT compiler, you might be able to get it as fast as a regular compiler. 
 
 Bytecode is a series of instructions. To actually run those instructions, the easiest thing to do is be an interpreter. But there is still interpretation overhead. The idea of JIT, is that it grabs segments of the bytecode, and translates it into assembly instructions directly. 
+
+#####Compiling a Simple Program
+```c
+int gcd(int a, int b)
+{
+while (a != b) {
+if (a > b) a -= b;
+else b -= a;
+}
+return a;
+}
+```
+Is really just:
+```
+i n t sp g c d ( i n t sp a , sp i
+n t sp b ) nl { nl sp sp w h i l e sp
+( a sp ! = sp b ) sp { nl sp sp sp sp i
+f sp ( a sp > sp b ) sp a sp - = sp b
+; nl sp sp sp sp e l s e sp b sp - = sp
+a ; nl sp sp } nl sp sp r e t u r n sp
+a ; nl } nl
+```
+
+Compiler is broken up into steps/different level of abstraction/phases. This helps us as human beings how to understand it. 
+
+First step of a compiler: Lexical analysis to get sequence of tokens. 
+
+`int` `gcd` `(` `int` `a` `,` `int` `b` `)` `{` `while` `(` `a`
+`!=` `b` `)` `{` `if` `(` `a` `>` `b` `)` `a` `-=` `b` `;` `else`
+`b` `-=` `a` `;` `}` `return` `a` `;` `}`
