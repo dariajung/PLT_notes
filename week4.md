@@ -394,3 +394,21 @@ How can we overload things like `+`? One way is to make everything in the langua
 
 For parser, get the grammar right, pass it through OCaml yak to get a parser. 
 
+#####So what are Compilers?
+In this class, you are concerned with three languages:
+- OCaml, which is what your compiler is written in
+- Your input language
+- Your output language
+
+#####Language Processors
+What we were shown earlier was a classical interpreter. It takes a source program as an input, and it takes some sort of input for the source program. The interpreter takes these two things, executes the source program on the input, and produces output. 
+
+In the case of the calculator example, we get a textual interpretation of operations on integers.
+
+What sorts of things are interpreters?
+- A pocket calculator is an interpreter. There's an interpreter inside calculators that runs the calculator program within the calculator program. 
+- Markdown translates to HTML. 
+- Bash is an interpreter. Shells are implemented as interpreters. 
+
+Look up 4004 Intel Micro Processor
+
