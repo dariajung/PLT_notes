@@ -410,5 +410,15 @@ What sorts of things are interpreters?
 - Markdown translates to HTML. 
 - Bash is an interpreter. Shells are implemented as interpreters. 
 
-Look up 4004 Intel Micro Processor
+Look up 4004 Intel Micro Processor.
+- Why did 4004 use an interpreter to write the calculator program? 
+- The program was more concise if you wrote it in an interpreted language, rather than writing it in 4004 machine code. 
+- This made the calculator slower, but the interpreted program was much smaller. 
 
+Three Knee Jerk Reactions
+- Add another type if you run into a problem
+- When in doubt, add another level of indirection
+
+Compiler is a middle man between source program and what gets executed in processor. 
+Compiler looks at the program, and generates an equivalent program. 
+Why use a compiler? Compiled code generally runs faster than interpreted code. Compilers optimize. Compilers catch mistakes, but interpreted programs run until it hits that mistake, it has to evaluate everything that leads to it. 
