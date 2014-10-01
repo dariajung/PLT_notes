@@ -89,7 +89,7 @@ Translating REs into NFAs (Thompson's algorithm) slide 28.
 
 Epsilon transitions? Input on no input at all? This means you're in two different states at once (if there are two epsilon transitions). 
 
-Kleene closure: Prof Edwards says "it kind of looks like a smiling guy with glasses."
+Kleene closure: Prof Edwards says "it kind of looks like a smiling guy with glasses." The mouth is the empty case, and the bridge of the glasses is the repeat case.
 
 The NFA on slide 29 is wrong because it can accept strings like abab, which is not in the language `a*b*`.
 
@@ -103,3 +103,45 @@ Restricted form of NFAs (a DFA):
 - For each state s and symbol a, there is at most one edge labeled a leaving s.
 
 You don't always have to have an edge leaving a state, because that introduces a dead state.
+
+#####October 1, 2014
+
+Last class, we talked about lexical analysis. Taking a stream of characters and turning them into a stream of tokens. We want to formalize patterns more precisely and write code that takes these strings of characters and turns them into tokens.
+
+We'll talk about subset construction today.
+
+A DFA is a restricted NFA where you can only be in one state at one time.
+
+Rather than trying to emulate possibilities at a time, we can try to simulate them at the same time.
+
+Subset construction for `(a|b)*abb`. We only have two input possibilities, `a` or `b`. We want to construct a path through the NFA, but we don't know exactly which path we are going to follow. Rather than being absolutely sure where we are, we can just hand-wavey-y talk about the existence of a path (rather than knowing exactly what the path is itself).
+
+See slides for subset construction diagrams.
+
+We can construct a DFA by just creating a loop on a state you've already seen before.
+
+Question asked in class: Is there a way to create the worst possible DFA? Yes, by unrolling the DFA as many times as we want. Not sure why you'd want to do that. Worst case, it's exponential.
+
+DFA minimization is usually polynomial time.
+
+Look in the Dragon book for a different way of laying out the subset construction algorithm.
+
+How big does the NFA get in relation to the number of regular expressions? Linear. But the DFAs have a potential to grow.
+
+We will see the subset algorithm popping up elsewhere in the future. 
+
+**PRACTICALLY:**
+
+Write a `.mll` file, run it through the ocamllex program. It will produce the `.ml` file that essentially builds you the parser/tokenizer.
+
+```ocaml
+{ open Parser }
+rule token =
+parse [’ ’ ’\t’ ’\r’ ’\n’] { token lexbuf }
+| ’+’ { PLUS }
+| ’-’ { MINUS }
+| ’*’ { TIMES }
+| ’/’ { DIVIDE }
+| [’0’-’9’]+ as lit { LITERAL(int_of_string lit) }
+| eof { EOF }
+```
