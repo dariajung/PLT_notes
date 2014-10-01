@@ -145,3 +145,43 @@ parse [’ ’ ’\t’ ’\r’ ’\n’] { token lexbuf }
 | [’0’-’9’]+ as lit { LITERAL(int_of_string lit) }
 | eof { EOF }
 ```
+
+See slide 58 for possible patterns that can be used in OCamllex. 
+
+Your rules should look something like this for your project:
+
+```ocaml
+{ type token = PLUS | IF | ID of string | NUM of int }
+let letter = [’a’-’z’ ’A’-’Z’]
+let digit = [’0’-’9’]
+rule token =
+parse [’ ’ ’\n’ ’\t’] { token lexbuf } (* Ignore whitespace *)
+| ’+’ { PLUS } (* A symbol *)
+| "if" { IF } (* A keyword *)
+(* Identifiers *)
+| letter (letter | digit | ’_’)* as id { ID(id) }
+(* Numeric literals *)
+| digit+ as lit { NUM(int_of_string lit) }
+| "/*" { comment lexbuf } (* C-style comments *)
+and comment =
+parse "*/" { token lexbuf } (* Return to normal scanning *)
+| _ { comment lexbuf } (* Ignore other characters *)
+```
+
+#####Free-Format Languages
+Program text is a series of tokens possibly separated by whitespace and comments, which are both ignored. Python and OCaml are not free-format languages because indentation matters. Free-format languages include C, Java.
+
+To this end, they need:
+
+- Keywords (if, while)
+- punctuation (, ( +)
+- identifiers (foo bar)
+- numbers (10 -3.14)
+- strings ("A string")
+
+Fortran is not free format, which is probably good because FORTRAN code is punched onto paper and it would be bad to go back and have to re-punch holes into a card again.
+
+#####Syntax and Language Design
+The semantics are most important. Syntax is kind of like a religion. Aesthetics matter to people. Verbosity matters. Too small can be problematic though. 
+
+Some syntax is error prone, ie: angle brackets in C++.
