@@ -185,3 +185,8 @@ Fortran is not free format, which is probably good because FORTRAN code is punch
 The semantics are most important. Syntax is kind of like a religion. Aesthetics matter to people. Verbosity matters. Too small can be problematic though. 
 
 Some syntax is error prone, ie: angle brackets in C++.
+
+What does something like "ifa" return? It should return one token
+"if+" should return two tokens.
+
+Keywords look like identifiers, but are more specific. 
