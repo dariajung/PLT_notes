@@ -131,7 +131,7 @@ You want left leaning trees.
 %{
 (* Header: verbatim OCaml; optional *)
 %}
-/* Declarations: tokens, precedence, etc. */
+/* Declarations: tokens, tokens with types, precedence, etc. See more on slide 91 titled Declarations in syntax.pdf */
 %%
 /* Rules: context-free rules */
 %%
@@ -145,4 +145,27 @@ Fix ambiguity by restructing grammar, or by explictly listing precedence rules. 
 ```ocaml
 %left PLUS MINUS
 ```
+
+.mly file is an Ocaml yacc file. 
+
+Can you get the grammar through yacc without shift/reduce errors? Do this for your project. A parser generator is a useful tool since we need to do this for our languages anyway.
+
+######Parsing Algorithms
+
+Where are these shift/reduce errors coming from? 
+
+Subclasses of Context Free Grammars have O(n) parsing algorithms. Yay so fast. 
+
+######Rightmost Derivation of Id * Id * Id
+
+A parser effectively needs to construct a proof. 
+
+`e` and `t` are non-terminals. `+`, `*`, and `Id` are terminals. 
+
+```ocaml
+1 : e → t + e
+2 : e → t
+3 : t → Id ∗ t
+4 : t → Id```
+
 
