@@ -52,4 +52,56 @@ stmt : IF expr THEN stmt
 
 Some languages resolve this problem by insisting on nesting everything. 
 
+Let's get fancier.
+
+######Another Solution to the Dangling Else Problem
+
+Break into two types of statements, one that has danging "then", and one that doesn't.
+
+```ocaml
+stmt : dstmt
+| cstmt
+dstmt : IF expr THEN stmt
+| IF expr THEN cstmt ELSE dstmt
+cstmt : IF expr THEN cstmt ELSE cstmt
+| other statements...```
+
+######Ambiguous Arithmetic
+Ambiguity also seen in arithmetic expressions.
+
+Consider: `3 - 4 * 2 + 5` and the grammar `e → e + e | e − e | e ∗ e | e / e | N`
+
+The grammar corresponds to the first tree on slide 82 on syntax.pdf.
+
+######Operator Precedence and Associativity
+
+Defines how "sticky" an operator is. 
+
+`*` has a higher precedences than `+`.
+
+`(1 * 2) + (3 * 4)`
+
+######Associativity
+Whether to evaluate left-to-right or right-to-left. 
+Most operators are left-associative, but subtraction is a bit different. 
+
+`1 - 2 - 3 - 4`
+
+We want the arithmetic expression to have one answer. We don't want to question how the compiler might interpret an expression.
+
+Certain operators need precedence and associativity.
+
+Oh nooooo, shift/reduce conflicts :( :( :( The grammar is broken, the grammar is ambiguous. Yacc is telling you to fix it. 
+
+######Assigning Precedence Levels
+
+```ocaml
+expr : expr PLUS expr
+| expr MINUS expr
+| term
+term : term TIMES term
+| term DIVIDE term
+| atom
+atom : NUMBER
+```
 
