@@ -166,6 +166,13 @@ A parser effectively needs to construct a proof.
 1 : e → t + e
 2 : e → t
 3 : t → Id ∗ t
-4 : t → Id```
-
-
+4 : t → Id```
+Start with an `e`. We have two rules for what an `e` can become. Let's look at the first rule, `e -> t + e` When we have a choice of a non-terminal to expand, choose the right one. We can get from `e -> e + t`, now we expand `e` to `t`. We currently have `t + t`. Expand the right `t` to a `t`. Expand `t` to `Id`. Now expand the left `t` using rule 3 to `Id * t`. Now we have `Id * t + Id`. Expand `t` to `Id`, which gives us `Id * Id + Id`.
+See slides starting from 96 to see colored derivation.
+Because we did a right most derivation, we only have to expand left side, and terminals on the right.
+######Reverse Rightmost Derivation
+Work backwords to re-derive `Id * Id + Id`.
+######Shift/Reduce Parsing Using an Oracle
+Shift, put onto top of stack. Reduce, take off from top of stack. 
+Oracle is very clever. See it how it shifts/reduces on slides.
+Later we'll be told how to build this Oracle.
