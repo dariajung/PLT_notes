@@ -35,6 +35,21 @@ How he got in my pajamas I don’t know. —Groucho Marx
 ```
 Did I shoot an elephant (with a gun while wearing) my pajamas? Or did I shoot an elephant who somehow is wearing my pajamas? English grammar is ambiguous!!!
 
+######The Dangling Else Problem
 
+Who owns the *else*?
+
+`if (a) if (b) c(); else d();`
+
+Who gets the `else`? The C programming language manual states: "As usual the “else” is resolved by connecting an else with the last encountered elseless if." So we want the first tree on slide 78 of syntax.pdf.
+
+In Ocaml yacc we want to write something like 
+
+```ocaml
+stmt : IF expr THEN stmt
+| IF expr THEN stmt ELSE stmt
+```
+
+Some languages resolve this problem by insisting on nesting everything. 
 
 
