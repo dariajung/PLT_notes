@@ -105,3 +105,44 @@ term : term TIMES term
 atom : NUMBER
 ```
 
+Something like 1 + 2 + 3. Which way do we parse it? Do we evaluate 1 + 2 first? 
+
+Make it so that you can only build up sequences from the left or from the right. 
+
+Update above parser to:
+
+```ocaml
+expr : expr PLUS term
+| expr MINUS term
+| term
+term : term TIMES atom
+| term DIVIDE atom
+| atom
+atom : NUMBER
+```
+
+Now expr has precedence over term.
+
+You want left leaning trees.
+
+######OCamlyacc Specifications
+
+```ocaml
+%{
+(* Header: verbatim OCaml; optional *)
+%}
+/* Declarations: tokens, precedence, etc. */
+%%
+/* Rules: context-free rules */
+%%
+(* Trailer: verbatim OCaml; optional *)
+```
+
+You need to tell yacc what the tokens are in an `.mly` file. 
+
+Fix ambiguity by restructing grammar, or by explictly listing precedence rules. ie:
+
+```ocaml
+%left PLUS MINUS
+```
+
