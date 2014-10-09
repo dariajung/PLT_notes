@@ -176,3 +176,37 @@ A parser effectively needs to construct a proof.
 Shift, put onto top of stack. Reduce, take off from top of stack. 
 Oracle is very clever. See it how it shifts/reduces on slides.
 Later we'll be told how to build this Oracle.
+---
+October 8, 2014
+######Parsing Algorithms
+Last class we talked about shift/reduce parsing. What's going on with the oracle? It's just an automaton. 
+######Handle Hunting
+Right Sentential Form: any step in a rightmost derivation
+Handle: in a sentential form, a RHS of a rule that, when rewritten, yields the previous step in a rightmost derivation. But how do we figure out what is and isn't a handle? When is there a handle on the top of the stack? 
+Naive: let's write down all right-sentential forms and pattern match against them? This is crazy, but let's try it anyway. Usually you'll end up with an infinite number of things. See slide 122 on syntax.pdf.
+When we start expanding the tree, while it goes on infinitely, we start seeing patterns.
+A regular deterministic automaton suffices to locate a handle in a right sentential form - Donald Knuth
+*Look at automaton on slide 125. 
+We could do a left-most derivation to get a left sentential form. 
+CFG --> Push down automaton, where do we push? But it just so happens that this grammar can be expressed as a regular expression. 
+So how do we get this automaton? The algorithm can be found in the Dragon Book (Compilers).
+######Building Initial State of LR(0) Automaton
+If Pacman is to the left side of a non-terminal, then Pacman "eats" the expression;  any viable prefix must be at the beginning of a string expanded from e.
+In the trees, we always start with e, t or Id. Pacman can chew up an e, t, or Id. If there's an e on your stack, then you're done (so long as there is no more input). If Pacman is about to "starve" or is satiated, then that is an accepting state. Keep doing this until we can't generate any more new states. See slides starting at 130 for reduction diagrams.
+Once we've built automaton, what do we do? We need two functions, one of which is the first function.
+######First Function
+If you can derive a string that starts with terminal t from some sequence of terminals and nonterminals a, then t belongs to first(a).
+A terminal can only start with a terminal. 
+We're interested in the follow set.
+######Follow Function
+We're going to use this follow set, if we just finished this viable prefix, something is wrong if the next token is not in the follow set of that viable prefix. Something has gone wrong, there is a syntax error. Can we safely reduce a handle without breaking right most derivation? For each terminal, we look at what can follow it. If a non-terminal appears at the end of a rule, we have to look at the context in which it occurs.
+
+Let's look at: Id + Id Id
+Id + Id could be turned into an e. But e Id is a syntax error. There is no way to be able to get two IDs in a row.
+What could follow a t is something that could also follow an e. 
+Take the automaton and put it into a table.
+`$` is a stop symbol.
+
+######Converting LR(0) Automaton to SLR Parsing TableIf terminal, either reduce using some rule, or shift. For non-terminals, tell it what state to go to.
+So probably study how to make an SLR table since Professor Edwards keeps hinting it will be on a test. 
+***Always reduce the handle on the top of the stack, not something deep in the stack.
