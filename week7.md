@@ -28,6 +28,23 @@ print(gcd(99,121));
 No types mentioned because everything is an integer.
 
 #####Front-End
----
 
+Tokenize and parse to produce an Abstract Syntax Tree.
 
+MicroC slide 4 to see scanner.mll
+
+How do we get an arbitrary number of nesting? Prof Edwards says don't worry about it unless you really care. 
+
+#####Structure of AST 
+
+- the crispest vision of the structure of your programming)
+- As few cases as possible
+- Keep special cases to a minimum
+- No idea that you have a standard library in your AST
+- Think about if your language need statements AND expressions. OCaml only has expressions.
+- Program is a list of strings and a list of function declarations
+
+A good test is to have a pretty printer. Can your compiler take take something, you pretty print it, put it back into your compiler, and it is happy? Good test to make sure your AST is good. Pretty printer prints out your program.
+
+#####Parser (Parser builds the AST)
+Token order has no precedence, but untyped tokens should be separated from ones with types.
