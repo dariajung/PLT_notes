@@ -146,3 +146,41 @@ foo(a, b, c) {
 
 When we call foo, within the scope of the function call, a should be 3, b should be 5, c should be 4.
 ```
+
+Compilers don't execute like interpreters; rather than doing the computation now, LATER do the computation.
+
+So what does a compiler look like?
+
+#####A Bytecode Compiler
+There are many outputs from a compiler. Could be Assembly, C, Bytecode, etc.
+
+Compilation: a syntax-directed translation into a more detailed representation of the program 
+
+Take the AST and run it through a big recursive function. Take the literal 3, and 4, and add them. 
+
+This is a stack based, but not the most efficient to implement in hardware. But an easy target for code generation.
+
+One main big stack. Two registers. Stack pointer points to the first thing not allocated onto the stack. Frame pointer is beneath the stack pointer. Activation record (where all the information is to let you execute a function)
+
+Two things to do when you're working on project: add another level of indirection, and add another new data type
+
+Push/discard from a stack (you should know this!)
+
+Subroutines example:
+
+Going back to `3 + foo(3, 5, 4)`
+
+```
+Push Lit 3
+Push Lit 4
+Push Lit 5
+Push Lit 3
+
+Jump to subroutine where foo is
+
+And then call Add
+```
+
+Look at slides for Bytecode for GCD (slide 26)
+
+
