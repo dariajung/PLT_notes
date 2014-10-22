@@ -79,6 +79,44 @@ You can't pass types to a function, you can only pass parameters. Something like
 
 Come up with a syntax for types, and values. 
 
-Semantic Checking: Static vs Dynamic typing
+######Semantic Checking: Static vs Dynamic typing
 
 Build an AST, pass it through static semantic analysis to make sure AST has right structure. 
+
+- Lexical analysis: Make sure tokens are valid
+- Syntactic analysis: Make sure tokens appear in correct order
+- Semantic analysis: makes sure program is consistent
+
+AST to Semantically checked AST. 
+
+Write some sort of checking function: pass an environment into it, pass it an AST node, and a type.
+
+If we get a name of a variable, then we need to check what its type is. 
+
+######Static Scoping 
+A name begins life where it is declared and ends at the end of its block.
+
+Static scoping means you can derive what's in what scope just by looking at the structure of the code. 
+
+######Basic Static Scope in OCaml
+A name is bound after the “in” clause of a “let.” If the name is re-bound, the binding takes effect after the “in.”
+
+If you're having user defined functions in your language, will you let your user nest functions?
+
+#####A Static Semantic Analyzer
+
+Check: ast -> sast (semantic Abstract Syntax Tree)
+
+In an expression, you want every subnode to have its own type.
+
+`type` is a keyword in OCaml
+
+Symbol Table: It's a map from names to information about the names, typically the types, or where the things get laid out in memory. The symbol table should tell you all you need about that name. 
+
+How to find something in a symbol table? Or update it? Maybe you don't need a map, just use a simple linear search (list or array). Add a child symbol table when you enter a new scope. When you leave scope, throw away the child. 
+
+What do you do when you come across a block? The parent is the existing scope, so you create a new scope when the parent is the scope you currently have. The new local thing is empty. 
+
+Build a static semantic analyzer for your compiler. Expressions (literals and identifiers) --> when you come across name, find it; Binary operators; when calling a function, make sure it's already defined
+
+Figure out what has to be right about the names. 
