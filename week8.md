@@ -66,4 +66,19 @@ int x, y;
 struct b {
 int x, y;
 } bar;
-bar = foo;```Is this legal in C? 
+bar = foo;```Is this legal in C? These two are structurally equivalent. C compares types by name, not by structure. Error: Incompatible types 
+---######October 22, 2014
+
+If you're going to have operators, make them just postfix, or just prefix.
+
+C's declarators, you have to give them a name. Most of the this is fine. So you have a type expression.
+
+You can't pass types to a function, you can only pass parameters. Something like sizeof takes type expression: `sizeof(float [10])` and returns the number of bytes. 
+
+`char *` is a type expression.
+
+Come up with a syntax for types, and values. 
+
+Semantic Checking: Static vs Dynamic typing
+
+Build an AST, pass it through static semantic analysis to make sure AST has right structure. 
